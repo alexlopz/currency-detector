@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/purple_500"
     tools:context=".MainActivity">
 
@@ -17,7 +17,8 @@
         android:layout_marginRight="16dp"
         android:layout_marginBottom="16dp"
         android:backgroundTint="@color/purple_500"
-        android:src="@drawable/ic_camera_white" />
+        android:src="@drawable/icon_camera"
+        app:tint="@android:color/white" />
 
 
     <LinearLayout
@@ -32,7 +33,7 @@
             android:layout_width="196dp"
             android:layout_height="170dp"
             android:layout_marginTop="10sp"
-
+            android:background="@drawable/rounded_image_view"
             android:gravity="center" />
 
         <LinearLayout
@@ -76,16 +77,31 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="200dp"
-        android:padding="16dp"
-        android:background="@drawable/rounded_top_corners">
+        android:background="@drawable/rounded_top_corners"
+        android:orientation="vertical"
+        android:padding="16dp">
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="70dp"
-            app:cardCornerRadius="16dp"
-            android:backgroundTint="@color/white">
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="@color/white"
+            app:cardCornerRadius="16dp"></androidx.cardview.widget.CardView>
 
-        </androidx.cardview.widget.CardView>
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="@color/white"
+            app:cardCornerRadius="16dp"></androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="@color/white"
+            app:cardCornerRadius="16dp"></androidx.cardview.widget.CardView>
+
 
     </LinearLayout>
 
