@@ -1,11 +1,8 @@
-/*
- * Created by ishaanjav
- * github.com/ishaanjav
-*/
+
 
 package app.ij.mlwithtensorflowlite;
 
-import static app.ij.mlwithtensorflowlite.utils.CurrencyConstants.MONEDAS_CONSTANTES;
+import static app.ij.mlwithtensorflowlite.utils.CurrencyConstantsAll.MONEDAS_CONSTANTES;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
