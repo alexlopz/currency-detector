@@ -14,10 +14,10 @@ public class CurrencyConstantsAll {
     public static final String CINCUENTA_QUETZALES = "50 Quetzales";
     public static final String CIEN_QUETZALES = "100 Quetzales";
     public static final String GTQ1 = "1 Quetzal";
-    public static final String GTQ050 = "50 Centavos";
-    public static final String GTQ025 = "25 Centavos";
-    public static final String GTQ010 = "10 Centavos";
-    public static final String GTQ005 = "5 Centavos";
+    public static final String GTQ050 = "0.50 Centavos";
+    public static final String GTQ025 = "0.25 Centavos";
+    public static final String GTQ010 = "0.10 Centavos";
+    public static final String GTQ005 = "0.5 Centavos";
     public static final String CINCO_EUROS = "5 Euros";
     public static final String DIEZ_EUROS = "10 Euros";
     public static final String VEINTE_EUROS = "20 Euros";

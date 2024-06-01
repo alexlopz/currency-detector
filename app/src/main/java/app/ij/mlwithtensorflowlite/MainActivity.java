@@ -6,14 +6,18 @@ import static app.ij.mlwithtensorflowlite.utils.CurrencyConstantsAll.MONEDAS_CON
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.media.ThumbnailUtils;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -27,14 +31,27 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
+import app.ij.mlwithtensorflowlite.adapter.BankExchangeAdapter;
 import app.ij.mlwithtensorflowlite.ml.Model;
+import app.ij.mlwithtensorflowlite.models.ExchangeRatesResponse;
+import app.ij.mlwithtensorflowlite.remote.ApiService;
+import app.ij.mlwithtensorflowlite.remote.ApiUtil;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity {
 
-    TextView resultQuantity, resultCurrency;
-    ImageView imageView;
-    FloatingActionButton picture;
-    int imageSize = 224;
+    private TextView resultQuantity, resultCurrency;
+    private ImageView imageView;
+    private FloatingActionButton picture;
+    private int imageSize = 224;
+    private ApiService apiService;
+    private ProgressDialog dlg;
+    private ExchangeRatesResponse exchangeRatesResponse;
+    private BankExchangeAdapter bankExchangeAdapter;
+    private RecyclerView bankExchangeRecycler;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +62,10 @@ public class MainActivity extends AppCompatActivity {
         resultCurrency = findViewById(R.id.resultCurrency);
         imageView = findViewById(R.id.imageView);
         picture = findViewById(R.id.button);
+        apiService = ApiUtil.getAPIService();
+        bankExchangeRecycler = findViewById(R.id.banks_recycler);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        bankExchangeRecycler.setLayoutManager(layoutManager);
 
         picture.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,7 +120,10 @@ public class MainActivity extends AppCompatActivity {
 
             resultQuantity.setText(result[0]);
             resultCurrency.setText(result[1]);
+
+
             model.close();
+            getDataBank(parseToDouble(result[0]), result[1]);
         } catch (IOException e) {
             // TODO Handle the exception
         }
@@ -115,7 +139,69 @@ public class MainActivity extends AppCompatActivity {
 
             image = Bitmap.createScaledBitmap(image, imageSize, imageSize, false);
             classifyImage(image);
+
+            showProgress();
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
+
+    private void getDataBank(double currencyQuantity, String denomination) {
+        apiService.getExchangeGetRateResponse()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<ExchangeRatesResponse>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        dlg.dismiss();
+                    }
+
+                    @Override
+                    public void onNext(ExchangeRatesResponse response) {
+                        exchangeRatesResponse = response;
+                        Log.d("exchangeRatesResponse", exchangeRatesResponse.toString());
+                        dlg.dismiss();
+
+                        bankExchangeAdapter = new BankExchangeAdapter(response.getUsd().getBancos(), MainActivity.this, currencyQuantity, getCurrencyConversion(denomination), denomination);
+                        bankExchangeRecycler.setAdapter(bankExchangeAdapter);
+                        bankExchangeAdapter.notifyDataSetChanged();
+                    }
+                });
+    }
+
+    private String getCurrencyConversion(String denomination){
+        switch (denomination) {
+            case "Quetzal":
+            case "Quetzales":
+            case "Centavos":
+                return "$ ";
+            case "Dolar":
+            case "Dolares":
+                return "Q ";
+            case "Euros":
+                return "€ ";
+            default:
+                return "NA ";
+        }
+    }
+
+    public void showProgress() {
+        dlg = new ProgressDialog(this);
+        dlg.setMessage("Cargando...");
+        dlg.setCancelable(false);
+        dlg.show();
+    }
+
+    public double parseToDouble(String value) {
+        try {
+            return Double.parseDouble(value);
+        } catch (NumberFormatException e) {
+            return 0.0;
+        }
+    }
+
 }

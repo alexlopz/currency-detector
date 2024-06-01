@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
+
+    app:cardCornerRadius="16dp"
+    android:foreground="?android:attr/selectableItemBackground"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:orientation="horizontal">
+<!--        <ImageView-->
+<!--            android:id="@+id/bank_logo_img"-->
+<!--            android:layout_width="60dp"-->
+<!--            android:layout_height="60dp"-->
+<!--            android:layout_marginEnd="10dp"-->
+<!--            android:src="@drawable/bi_logo_white"/>-->
+        <ImageView
+            android:id="@+id/bank_logo_img"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginEnd="10dp"/>
+        <View
+            android:layout_height="match_parent"
+            android:layout_width="1dp"
+            android:background="@color/gris_soft"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/bank_name_txt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textColor="@color/purple_500"
+            android:text="Lorem Ipsum"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/bank_comp_txt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="bottom|start"
+                    android:layout_gravity="bottom"
+                    android:textStyle="bold"
+                    android:textSize="12dp"
+                    android:text="Compra: Q 7.52"/>
+                <TextView
+                    android:id="@+id/bank_vent_txt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="bottom|start"
+                    android:layout_gravity="bottom"
+                    android:textStyle="bold"
+                    android:textSize="12dp"
+                    android:text="Venta: Q 7.52"/>
+            </LinearLayout>
+
+
+            <View
+                android:layout_height="match_parent"
+                android:layout_width="1dp"
+                android:background="@color/gris_soft"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"/>
+            <TextView
+                android:id="@+id/bank_total_txt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:layout_gravity="bottom"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_weight="1"
+                android:textSize="32dp"
+                android:text="Q 30.00"/>
+        </LinearLayout>
+
+    </LinearLayout>
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
