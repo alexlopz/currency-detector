@@ -30,9 +30,11 @@ import org.tensorflow.lite.support.tensorbuffer.TensorBuffer;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.util.List;
 
 import app.ij.mlwithtensorflowlite.adapter.BankExchangeAdapter;
 import app.ij.mlwithtensorflowlite.ml.Model;
+import app.ij.mlwithtensorflowlite.models.Bank;
 import app.ij.mlwithtensorflowlite.models.ExchangeRatesResponse;
 import app.ij.mlwithtensorflowlite.remote.ApiService;
 import app.ij.mlwithtensorflowlite.remote.ApiUtil;
@@ -42,7 +44,7 @@ import rx.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TextView resultQuantity, resultCurrency;
+    private TextView resultQuantity, resultCurrency, mensaje;
     private ImageView imageView;
     private FloatingActionButton picture;
     private int imageSize = 224;
@@ -62,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
         resultCurrency = findViewById(R.id.resultCurrency);
         imageView = findViewById(R.id.imageView);
         picture = findViewById(R.id.button);
+        mensaje = findViewById(R.id.mensaje);
         apiService = ApiUtil.getAPIService();
         bankExchangeRecycler = findViewById(R.id.banks_recycler);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -166,7 +169,17 @@ public class MainActivity extends AppCompatActivity {
                         Log.d("exchangeRatesResponse", exchangeRatesResponse.toString());
                         dlg.dismiss();
 
-                        bankExchangeAdapter = new BankExchangeAdapter(response.getUsd().getBancos(), MainActivity.this, currencyQuantity, getCurrencyConversion(denomination), denomination);
+                        List<Bank> bancos = response.getUsd().getBancos();
+
+                        if (bancos.size() > 0) {
+                            mensaje.setVisibility(View.GONE);
+                            bankExchangeRecycler.setVisibility(View.VISIBLE);
+                        } else {
+                            mensaje.setVisibility(View.VISIBLE);
+                            bankExchangeRecycler.setVisibility(View.GONE);
+                        }
+
+                        bankExchangeAdapter = new BankExchangeAdapter(bancos, MainActivity.this, currencyQuantity, getCurrencyConversion(denomination), denomination);
                         bankExchangeRecycler.setAdapter(bankExchangeAdapter);
                         bankExchangeAdapter.notifyDataSetChanged();
                     }
