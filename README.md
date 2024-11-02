@@ -1,4 +1,4 @@
-# Detector de monedas y converso de divisas
+# Detector de monedas y conversor de divisas
 
 Aplicación móvil para Android desarrollada en Java que utiliza TensorFlow Lite para reconocer y clasificar imágenes de billetes de distintas denominaciones. El proyecto está construido en Android Studio y utiliza Gradle para la gestión de dependencias.
 
